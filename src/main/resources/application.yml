@@ -1,1 +1,15 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: producto-service
+          uri: http://localhost:8081/api/producto
+          predicates:
+            - Path=/api/producto/**
 
+        - id: movimiento-service
+          uri: http://localhost:8080/api/movimiento
+          predicates:
+            - Path=/api/movimiento/**
