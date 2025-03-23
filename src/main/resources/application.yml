@@ -6,26 +6,27 @@ spring:
       routes:
         - id: producto-service
           uri: http://localhost:8081/api/producto
+#          uri: http://product:8081/api/producto
           predicates:
             - Path=/api/producto/**
 
         - id: movimiento-service
-          uri: http://localhost:8080/api/movimiento
+          uri: http://movement:8080/api/movimiento
           predicates:
             - Path=/api/movimiento/**
 
         - id: auth-service
-          uri: http://localhost:8082/api/auth
+          uri: http://authentication:8082/api/auth
           predicates:
             - Path=/api/auth/**
 
         - id: ventas-service
-          uri: http://localhost:8085/api/ventas
+          uri: http://sales:8085/api/ventas
           predicates:
             - Path=/api/ventas/**
 
         - id: client-service
-          uri: http://localhost:8083/api/clientes
+          uri: http://client:8083/api/clientes
           predicates:
             - Path=/api/clientes/**
 

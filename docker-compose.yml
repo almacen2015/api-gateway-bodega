@@ -1,0 +1,35 @@
+services:
+  gateway:
+    container_name: gateway-service
+    build: .
+    ports:
+      - "9000:9000"
+    depends_on:
+      - authentication
+
+  authentication:
+    container_name: auth-service
+    build: ../mcsv-auth
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+
+
+#  product:
+#    container_name: product-service
+#    build: ../mcsv-productos
+#    ports:
+#      - "8081:8081"
+#    depends_on:
+#      - products-db
+
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: authentication-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
