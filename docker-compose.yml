@@ -6,30 +6,39 @@ services:
       - "9000:9000"
     depends_on:
       - authentication
+      - product
 
   authentication:
     container_name: auth-service
     build: ../mcsv-auth
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/authentication-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
     ports:
       - "8082:8082"
     depends_on:
       - postgres
 
-
-#  product:
-#    container_name: product-service
-#    build: ../mcsv-productos
-#    ports:
-#      - "8081:8081"
-#    depends_on:
-#      - products-db
+  product:
+    container_name: product-service
+    build: ../mcsv-productos
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/productos-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres
     container_name: postgres-db
     environment:
-      POSTGRES_DB: authentication-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
     ports:
       - "5432:5432"
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
