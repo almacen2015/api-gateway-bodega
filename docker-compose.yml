@@ -7,6 +7,8 @@ services:
     depends_on:
       - authentication
       - product
+      - client
+      - movement
 
   authentication:
     container_name: auth-service
@@ -29,6 +31,30 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
     ports:
       - "8081:8081"
+    depends_on:
+      - postgres
+
+  client:
+    container_name: client-service
+    build: ../mcsv-clientes
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/clientes-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+
+  movement:
+    container_name: movement-service
+    build: ../mcsv-movimiento
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventario-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8080:8080"
     depends_on:
       - postgres
 
