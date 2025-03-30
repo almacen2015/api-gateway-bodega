@@ -54,7 +54,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventario-db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_PRODUCT_SERVICE_URL=http://product:9000/api/producto
+      - SPRING_PRODUCT_SERVICE_URL=http://gateway:9000/api/producto
     ports:
       - "8080:8080"
     depends_on:
@@ -65,9 +65,9 @@ services:
     build: ../mcsv-ventas
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/ventas-db
-      - SPRING_PRODUCT_SERVICE_URL=http://product:9000/api/producto
-      - SPRING_MOVEMENT_SERVICE_URL=http://movement:9000/api/movimiento
-      - SPRING_CLIENT_SERVICE_URL=http://client:9000/api/client
+      - SPRING_PRODUCT_SERVICE_URL=http://gateway:9000/api/producto
+      - SPRING_MOVEMENT_SERVICE_URL=http://gateway:9000/api/movimiento
+      - SPRING_CLIENT_SERVICE_URL=http://gateway:9000/api/client
     ports:
       - "8085:8085"
     depends_on:
